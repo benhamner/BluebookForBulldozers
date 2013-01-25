@@ -20,13 +20,13 @@ def split_test_set(df, cutoff_time, output_path):
     df_final_evaluation = df_final_evaluation.join(private_labels)
 
     df_public_leaderboard[out_columns].to_csv(
-        os.path.join(output_path, "PublicLeaderboard.csv"), index=False)
+        os.path.join(output_path, "Valid.csv"), index=False)
     df_public_leaderboard[["SalesID", "SalePrice", "Usage"]].to_csv(
-        os.path.join(output_path, "PublicLeaderboardSolution.csv"), index=False)
+        os.path.join(output_path, "ValidSolution.csv"), index=False)
     df_final_evaluation[out_columns].to_csv(
-        os.path.join(output_path, "FinalEvaluation.csv"), index=False)
+        os.path.join(output_path, "Test.csv"), index=False)
     df_final_evaluation[["SalesID", "SalePrice", "Usage"]].to_csv(
-        os.path.join(output_path, "FinalEvaluationSolution.csv"), index=False)
+        os.path.join(output_path, "TestSolution.csv"), index=False)
 
 def main():
     data_path = os.path.join(os.environ["DataPath"], "FastIron")

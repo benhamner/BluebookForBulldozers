@@ -17,7 +17,6 @@ columns = set(train.columns)
 columns.remove("SalesID")
 columns.remove("SalePrice")
 columns.remove("saledate")
-columns.remove("percentile")
 
 train_fea = get_date_dataframe(train["saledate"])
 test_fea = get_date_dataframe(test["saledate"])

@@ -22,7 +22,7 @@ def get_test_df(data_path = None):
     if data_path is None:
         data_path, submission_path = get_paths()
 
-    test = pd.read_csv(os.path.join(data_path, "PublicLeaderboard.csv"),
+    test = pd.read_csv(os.path.join(data_path, "Valid.csv"),
         converters={"saledate": parse})
     return test 
 
