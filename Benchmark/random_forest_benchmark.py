@@ -22,12 +22,11 @@ train_fea = get_date_dataframe(train["saledate"])
 test_fea = get_date_dataframe(test["saledate"])
 
 for col in columns:
-    types = set(type(x) for x in train[col])
-    if str in types:
-        s = set(x for x in train[col])
-        str_to_categorical = defaultdict(lambda: -1, [(x[1], x[0]) for x in enumerate(s)])
-        train_fea = train_fea.join(pd.DataFrame({col: [str_to_categorical[x] for x in train[col]]}, index=train.index))
-        test_fea = test_fea.join(pd.DataFrame({col: [str_to_categorical[x] for x in test[col]]}, index=test.index))
+    if train[col].dtype == np.dtype('object'):
+        s = np.unique(train[col].values)
+        mapping = pd.Series([x[0] for x in enumerate(s)], index = s)
+        train_fea = train_fea.join(train[col].map(mapping))
+        test_fea = test_fea.join(test[col].map(mapping))
     else:
         train_fea = train_fea.join(train[col])
         test_fea = test_fea.join(test[col])
