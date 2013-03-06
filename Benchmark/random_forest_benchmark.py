@@ -23,13 +23,13 @@ test_fea = get_date_dataframe(test["saledate"])
 
 for col in columns:
     if train[col].dtype == np.dtype('object'):
-        s = np.unique(train[col].values)
+        s = np.unique(train[col].fillna(-1).values)
         mapping = pd.Series([x[0] for x in enumerate(s)], index = s)
-        train_fea = train_fea.join(train[col].map(mapping))
-        test_fea = test_fea.join(test[col].map(mapping))
+        train_fea = train_fea.join(train[col].map(mapping).fillna(-1))
+        test_fea = test_fea.join(test[col].map(mapping).fillna(-1))
     else:
-        train_fea = train_fea.join(train[col])
-        test_fea = test_fea.join(test[col])
+        train_fea = train_fea.join(train[col].fillna(0))
+        test_fea = test_fea.join(test[col].fillna(0))
 
 rf = RandomForestRegressor(n_estimators=50, n_jobs=1, compute_importances = True)
 rf.fit(train_fea, train["SalePrice"])
